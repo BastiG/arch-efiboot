@@ -8,6 +8,11 @@ INITRD_FALLBACK="initrd=\\initramfs-linux-fallback.img"
 
 EFIBOOTMGR=/usr/bin/efibootmgr
 
+if [ ! -f "${EFIBOOTMGR}" ]
+then
+    pacman -S efibootmgr
+fi
+
 # Identify boot and root devices and partition UUIDs
 ROOTPART=$(mount | grep " / " | cut -d " " -f 1)
 PARTUUID=$(blkid ${ROOTPART} -s PARTUUID -o value)
